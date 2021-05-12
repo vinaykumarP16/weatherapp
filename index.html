@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather App | v!N</title>
+<!-- 	<meta http-equiv="refresh" content="30">
+ -->	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/18fc5b7198.js" crossorigin="anonymous"></script>
+	<link rel="shortcut icon" type="image/ico" href="./favicon.ico">
+	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+			font-family: consolas;
+		}
+
+		body{
+			min-height: 100vh;
+			display: flex;
+			background: linear-gradient(45deg,#F0FBCD,#F582BA,#75AFC7);
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			width: 80%;
+			margin: 20px auto;
+			overflow: hidden;
+		}
+
+		.dataentry{
+			position: absolute;
+			top: 10vh;
+			display: flex;
+			flex-direction: column;
+			margin: 10px;
+			border: none;
+		}
+
+		input{
+			padding: 10px;
+			text-align:  center;
+			font-size: 20px;
+			border: none;
+
+		}
+
+		button{
+			margin: 20px;
+			border: none;
+			background: transparent;
+		}
+
+		button i{
+			font-size: 40px;
+			color: red;
+			cursor: pointer;
+		}
+
+		.weather{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			color:green;
+			
+		}
+
+		.weather.active{
+			border: 5px solid #8375A1;
+		}
+
+		h1,h3,h4,p{
+			margin:10px;
+		}
+
+		p{
+			font-weight: 700;
+			color:#451AAB;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div class="dataentry">
+	<input type="text" name="" id="input" placeholder="city name">
+	<button onclick="getData()"><i class="far fa-paper-plane"></i></button>
+	</div>
+	<div class="weather" id="main">
+		<h1 id="c"></h1>
+		<h3 id="w"></h3>
+		<h4 id="des"></h4>
+		<p id="Tempfull"></p>
+		<p id="s"></p>
+	</div>
+
+<script>
+
+
+	async function getData(){
+
+		const inp=document.getElementById('input').value;
+		console.log(inp);
+		const joke=`http://api.openweathermap.org/data/2.5/weather?q=${inp}&APPID=6b291dd40856a5314d646b64fbd4c31c`;
+		const response = await fetch(joke);
+		const data = await response.json();
+		const jokerand=(data);
+		console.log(data);
+
+		const temp=Math.floor(data.main.temp-273.15);
+		const Max=Math.floor(data.main.temp_max-273.15);
+		const Min=Math.floor(data.main.temp_min-273.15);
+		const Tempfull=(` temperature:${temp}  max-temp:${Max}  min-temp:${Min} deg celcius` );
+		const city=(` city: ${data.name}`);
+		const weather=(` weather is ${data.weather[0].main}`);
+		const des=(` desc : ${data.weather[0].description}`);
+		const sunrise=new Date(data.sys['sunrise']*1000);
+		const sunset=new Date(data.sys['sunset']*1000);
+
+		const sun= (` Sunrise at ${sunrise}
+
+ Sunset at ${sunset}	`)
+
+		const abc=document.getElementById('s');
+		abc.innerHTML=sun;
+		const cty=document.getElementById('c');
+		cty.innerHTML=city;
+		const weat=document.getElementById('w');
+		weat.innerHTML=weather;
+		const descrip=document.getElementById('des');
+		descrip.innerHTML=des;
+		const temprat=document.getElementById('Tempfull');
+		temprat.innerHTML=Tempfull;
+
+		console.log(sun,city);
+
+		const main=document.getElementById('main');
+		main.classList.add('active');
+
+	}
+
+
+
+
+</script>
+</body>
+</html>
