@@ -100,7 +100,7 @@
 
 		const inp=document.getElementById('input').value;
 		console.log(inp);
-		const joke=`http://api.openweathermap.org/data/2.5/weather?q=${inp}&APPID=6b291dd40856a5314d646b64fbd4c31c`;
+		const joke=`https://api.openweathermap.org/data/2.5/weather?q=${inp}&APPID=6b291dd40856a5314d646b64fbd4c31c`;
 		const response = await fetch(joke);
 		const data = await response.json();
 		const jokerand=(data);
